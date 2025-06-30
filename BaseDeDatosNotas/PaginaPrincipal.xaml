@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BaseDeDatosNotas.PaginaPrincipal"
+             Title="Notas Personales">
+    
+    <StackLayout Margin="20,35,20,20">
+        <Label Text="Agregar Nota:" />
+        <Entry x:Name="entryTexto" Placeholder="Escribe tu nota aquí" />
+        <Button Text="Agregar Nota" Clicked="OnAgregarNotaClicked" BackgroundColor="White" TextColor="Black" />
+
+        <Label Text="Ver Notas:" Margin="0,20,0,0" />
+        <Button Text="Obtener Todas las Notas" Clicked="OnObtenerNotasClicked" />
+
+        <!-- Botón modificar - inicialmente oculto -->
+        <Button x:Name="botonModificar" Text="Modificar Nota Seleccionada" Clicked="OnModificarNotaClicked" BackgroundColor="Orange" TextColor="White" Margin="0,10,0,0" />
+
+        <!-- Lista de notas - inicialmente oculta -->
+        <ListView x:Name="listViewNotas" Margin="0,20,0,0" ItemSelected="OnNotaSeleccionada">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackLayout Grid.Column="0">
+                                <Label Text="{Binding Texto}" FontSize="16" />
+                                <Label Text="{Binding Fecha, StringFormat='{0:dd/MM/yyyy HH:mm}'}" FontSize="12" TextColor="Gray" />
+                            </StackLayout>
+
+                            <Button Grid.Column="1" 
+                                    Text="Eliminar" 
+                                    BackgroundColor="Red" 
+                                    TextColor="White"
+                                    Clicked="OnEliminarNotaClicked"
+                                    CommandParameter="{Binding Id}" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Label x:Name="labelStatus" Margin="0,20,0,0" TextColor="Blue" />
+    </StackLayout>
+
+</ContentPage>
