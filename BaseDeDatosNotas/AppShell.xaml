@@ -8,8 +8,8 @@
     Title="BaseDeDatosNotas">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Notas"
+        ContentTemplate="{DataTemplate local:PaginaPrincipal}"
+        Route="PaginaPrincipal" />
 
 </Shell>

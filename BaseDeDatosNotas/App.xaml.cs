@@ -1,15 +1,16 @@
-﻿namespace BaseDeDatosNotas
+﻿using BaseDeDatosNotas.Data;
+
+namespace BaseDeDatosNotas
 {
     public partial class App : Application
     {
-        public App()
+        public static BaseDatosNotas NotasRepo { get; private set; }
+
+        public App(BaseDatosNotas repo)
         {
             InitializeComponent();
-        }
-
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
+            NotasRepo = repo;
+            MainPage = new AppShell();
         }
     }
 }

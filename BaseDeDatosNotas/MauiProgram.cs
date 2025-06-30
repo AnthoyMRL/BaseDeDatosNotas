@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using BaseDeDatosNotas.Data;
 
 namespace BaseDeDatosNotas
 {
@@ -6,20 +7,29 @@ namespace BaseDeDatosNotas
     {
         public static MauiApp CreateMauiApp()
         {
-            var builder = MauiApp.CreateBuilder();
-            builder
+            var constructor = MauiApp.CreateBuilder();
+            constructor
                 .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
+                .ConfigureFonts(fuentes =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fuentes.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            constructor.Services.AddLogging(logging =>
+            {
+                logging.AddDebug();
+            });
 #endif
 
-            return builder.Build();
+            // Registrar las páginas
+            constructor.Services.AddSingleton<PaginaPrincipal>();
+
+            // Registrar la base de datos
+            string dbPath = FileAccessHelper.GetLocalFilePath("notas.db3");
+            constructor.Services.AddSingleton<BaseDatosNotas>(s => ActivatorUtilities.CreateInstance<BaseDatosNotas>(s, dbPath));
+
+            return constructor.Build();
         }
     }
 }
